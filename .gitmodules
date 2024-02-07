@@ -1,3 +1,4 @@
 [submodule "UAssetAPI"]
 	path = UAssetAPI
-	url = https://github.com/atenfyr/UAssetAPI.git
+	url = https://github.com/LongerWarrior/UAssetAPI
+	branch = TCM
