@@ -135,7 +135,7 @@ namespace UAssetGUI
         public TextBox jsonView;
 
         public bool readyToSave = true;
-        public bool dirtySinceLastLoad = false; 
+        public bool dirtySinceLastLoad = false;
 
         public static Color ARGBtoRGB(Color ARGB)
         {
@@ -163,6 +163,7 @@ namespace UAssetGUI
                 {
                     case "StructProperty":
                     case "ClothLODData":
+                    case "FF7StructProperty":
                         var struc = (StructPropertyData)me;
                         for (int j = 0; j < struc.Value.Count; j++)
                         {
@@ -171,6 +172,7 @@ namespace UAssetGUI
                         break;
                     case "SetProperty":
                     case "ArrayProperty":
+                    case "FF7ArrayProperty":
                         var arr = (ArrayPropertyData)me;
 
                         for (int j = 0; j < arr.Value.Length; j++)
@@ -367,9 +369,11 @@ namespace UAssetGUI
         private HashSet<string> hasChildrenProperties = new HashSet<string>()
         {
             "StructProperty",
+            "FF7StructProperty",
             "ClothLODData",
             "SetProperty",
             "ArrayProperty",
+            "FF7ArrayProperty",
             "GameplayTagContainer",
             "MapProperty",
             "MulticastDelegateProperty",
@@ -389,6 +393,7 @@ namespace UAssetGUI
             {
                 case "StructProperty":
                 case "ClothLODData":
+                case "FF7StructProperty":
                     var struc = (StructPropertyData)me;
 
                     string decidedName = struc.Name.Value.Value;
@@ -422,6 +427,7 @@ namespace UAssetGUI
                     break;
                 case "SetProperty":
                 case "ArrayProperty":
+                case "FF7ArrayProperty":
                     var arr = (ArrayPropertyData)me;
 
                     var arrNode = new PointingTreeNode(arr.Name.Value.Value + " (" + arr.Value.Length + ")", arr, 0, exportNum);
@@ -538,10 +544,12 @@ namespace UAssetGUI
                         switch (thisPD.PropertyType.Value)
                         {
                             case "BoolProperty":
+                            case "FF7BoolProperty":
                                 row.Cells[++columnIndexer].Value = string.Empty;
                                 row.Cells[++columnIndexer].Value = ((BoolPropertyData)thisPD).Value.ToString();
                                 break;
                             case "FloatProperty":
+                            case "FF7FloatProperty":
                                 row.Cells[++columnIndexer].Value = string.Empty;
                                 row.Cells[++columnIndexer].Value = ((FloatPropertyData)thisPD).Value.ToString();
                                 break;
@@ -611,6 +619,7 @@ namespace UAssetGUI
                                 }
                                 break;
                             case "NameProperty":
+                            case "FF7NameProperty":
                                 row.Cells[++columnIndexer].Value = string.Empty;
                                 row.Cells[++columnIndexer].Value = ((NamePropertyData)thisPD).ToString();
                                 break;
@@ -630,6 +639,7 @@ namespace UAssetGUI
                                 //row.Cells[5].Value = enumData.Extra;
                                 break;
                             case "ByteProperty":
+                            case "FF7ByteProperty":
                                 var byteData = (BytePropertyData)thisPD;
                                 row.Cells[++columnIndexer].Value = string.Empty;
                                 row.Cells[++columnIndexer].Value = byteData.GetEnumBase()?.Value.Value == null ? FString.NullCase : byteData.GetEnumBase()?.Value.Value;
@@ -644,10 +654,12 @@ namespace UAssetGUI
                                 break;
                             case "StructProperty":
                             case "ClothLODData":
+                            case "FF7StructProperty":
                                 row.Cells[++columnIndexer].Value = ((StructPropertyData)thisPD).StructType?.ToString() ?? FString.NullCase;
                                 break;
                             case "ArrayProperty":
                             case "SetProperty":
+                            case "FF7ArrayProperty":
                                 row.Cells[++columnIndexer].Value = ((ArrayPropertyData)thisPD).ArrayType?.ToString() ?? FString.NullCase;
                                 break;
                             case "GameplayTagContainer":
@@ -874,6 +886,7 @@ namespace UAssetGUI
                                 }
                                 break;
                             case "StrProperty":
+                            case "FF7StrProperty":
                                 var strPropData = (StrPropertyData)thisPD;
                                 row.Cells[++columnIndexer].Value = (strPropData.Value?.Encoding ?? Encoding.ASCII).HeaderName;
                                 row.Cells[++columnIndexer].Value = strPropData.Value?.Value == null ? FString.NullCase : Convert.ToString(strPropData.Value.Value);

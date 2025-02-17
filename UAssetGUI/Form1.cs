@@ -66,7 +66,7 @@ namespace UAssetGUI
         {
             get
             {
-                return "UAssetGUI v" + UAGUtils._displayVersion;
+                return "UAssetGUI for FF7Rebirth v" + UAGUtils._displayVersion;
             }
         }
 
